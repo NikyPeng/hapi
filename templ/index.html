@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Hell World</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				background-color: #666;
+				color: #fff;
+			}
+			h1{
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+			}
+			.table{
+				width: 500px;
+			}
+			.table td{
+				text-align: center;
+				line-height: 30px;
+			}
+			footer{
+				width: 100%;
+				height: 50px;
+				position: fixed;
+				bottom: 0;
+			}
+			.nav{
+				width: 50%;
+				margin: 0 auto;
+				height: 100%;
+				list-style: none;
+				display: flex;
+				display: -webkit-flex;
+				justify-content: space-around;
+				-webkit-justify-content: space-around;
+				align-items: center;
+				-webkit-align-items: center;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Hello World</h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>姓名</th>
+					<th>性别</th>
+					<th>年龄</th>
+				</tr>
+			</thead>
+			<tbody id="content">
+				
+			</tbody>
+		</table>
+		<footer>
+			<ul class="nav">
+				<li>
+					<a href="/index">首页</a>
+				</li>
+				<li>
+					<a href="/culture">企业形象</a>
+				</li>
+				<li>
+					<a href="/about">关于我们</a>
+				</li>
+				<li>
+					<a href="/join">加入我们</a>
+				</li>
+				<li>
+					<a href="/contact">联系我们</a>
+				</li>
+			</ul>
+		</footer>
+	</body>
+	<script type="text/javascript">
+		(function(){
+			'use strict';
+			var xhr,url = "http://"+ window.location.host + '/api/username?t='+new Date().getTime();
+			if(window.XMLHttpRequest){
+				xhr = new XMLHttpRequest();
+			}else{
+				xhr = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			xhr.open('GET',url,true);
+			xhr.send(null);
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4 && xhr.status === 200){
+					console.log(xhr.responseText);
+					var names = JSON.parse(xhr.responseText),str='';
+					names.forEach((v,x,arr)=>{
+						str = str + '<tr><td>'+ (x + 1) +'</td><td>'+v.username+'</td><td>'+v.sex+'</td><td>'+v.age+'</td><td></tr>';
+					});
+					document.getElementById('content').innerHTML = str;
+				}
+			}
+		})();
+	</script>
+</html>
